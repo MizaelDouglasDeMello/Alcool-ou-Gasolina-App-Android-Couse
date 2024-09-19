@@ -39,14 +39,29 @@ class MainActivity : AppCompatActivity() {
     private fun calculate() {
         val alcool = editAlcool.text.toString().toDouble()
         val gasoline = editGasoline.text.toString().toDouble()
+         val resultValidation = validate(editAlcool.text.toString(), editGasoline.text.toString())
 
-        val result = alcool / gasoline
-
-        if (result >= 0.7){
-            textResult.text = "É melhor abastecer com Gasolina"
-        }else{
-            textResult.text = "É melhor abastecer com Álcool"
+        if(resultValidation){
+            val result = alcool / gasoline
+            if (result >= 0.7){
+                textResult.text = "Melhor utilizar Gasolina"
+            }else{
+                textResult.text = "Melhor utilizar Álcool"
+            }
         }
+
+
+
+
+    }
+
+    private fun validate(pAlcool: String, pGasoline: String): Boolean {
+        if (pAlcool.isEmpty() || pGasoline.isEmpty()){
+            textInputAlcool.error = if (pAlcool.isEmpty()) "Campo obrigatório" else null
+            textInputGasoline.error = if (pGasoline.isEmpty()) "Campo obrigatório" else null
+            return false
+        }
+        return true
     }
 
     private fun initViewsInterface() {
